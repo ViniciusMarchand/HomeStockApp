@@ -14,42 +14,28 @@ import {
 } from '@react-navigation/drawer';
 
 const CustomSidebarMenu = (props) => {
-    const BASE_PATH =
-        'https://www.nicesnippets.com/image/nice-logo.png';
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <View style={{ marginTop: 40, }}>
-                <Image
-                    source={{ uri: BASE_PATH }}
-                    style={styles.sideMenuProfileIcon}
-                />
+            <View style={{ marginTop: 50, }}>
+                <Text
+                    style={styles.sideBarMenuTitulo}
+                >HomeStockApp</Text>
             </View>
             <DrawerContentScrollView {...props}>
                 <DrawerItemList {...props}  />
-                <DrawerItem
-                    label="Visit Us"
-                    onPress={() => Linking.openURL('https://www.nicesnippets.com/')}
-                />
-                <View style={styles.customItem}>
-                    <Text
-                        onPress={() => {
-                            Linking.openURL('https://www.nicesnippets.com/');
-                        }}
-                    >
-                        Rate Us
-                    </Text>
-                </View>
             </DrawerContentScrollView>
         </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
-    sideMenuProfileIcon: {
+    sideBarMenuTitulo: {
         resizeMode: 'contain',
-        width: '95%',
+        width: '100%',
         height: 60,
+        fontSize: 30,
+        textAlign:'center',
     },
     customItem: {
         padding: 16,
