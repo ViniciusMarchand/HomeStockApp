@@ -1,14 +1,15 @@
 import React from 'react';
+import { useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-const HomeScreen = () => {
+const HomeScreen = (props) => {
+
     return (
         <View style={styles.container}>
             <Text style={styles.text}>HomeScreen!</Text>
         </View>
     );
 }
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
