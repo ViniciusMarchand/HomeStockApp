@@ -3,11 +3,12 @@ import validacaoCadastro from "../forms/validacaoCadastro";
 import { useState } from "react";
 import realizarCadastro from "../services/apis/usuario/realizarCadastro"
 import axios from "axios";
-export default function Cadastro(){
-    const [nome, setNome] = useState();
-    const [email, setEmail] = useState();
-    const [senha, setSenha] = useState();
-    const [senhaConfirmada, setSenhaConfirmada] = useState();
+import { http } from "../services/http";
+export default function Cadastro({navigation}){
+    const [nome, setNome] = useState('');
+    const [email, setEmail] = useState('');
+    const [senha, setSenha] = useState('');
+    const [senhaConfirmada, setSenhaConfirmada] = useState('');
 
     const showAlert = () => {
         Alert.alert(
@@ -23,9 +24,9 @@ export default function Cadastro(){
         );
       };
 
-      const handleSubmit = async (usuario)=> {
+      const handleSubmit = async (usuario)=> { 
         try {
-            const response = await axios.post('apiIp', usuario)
+            const response = await axios.post(`${http}/usuarios`, usuario)
             console.log(response.data)
         } catch (error) {
             console.error(error.message + 'dadw');
@@ -39,21 +40,25 @@ export default function Cadastro(){
                         <Text style={styles.paginaTitulo}>Cadastrar</Text>
                         <View style={styles.viewInput}>
                             <Text style={styles.labels}>Nome:</Text>
-                            <TextInput style={styles.inputs} placeholder="Insira seu nome aqui" keyboardType="email-address" onChangeText={(inputValue) => setNome(inputValue)}/>
+                            <TextInput style={styles.inputs} placeholder="Insira seu nome aqui" keyboardType="email-address" onChangeText={(inputValue) => setNome(inputValue)} value={nome}/>
                         </View>
                         <View style={styles.viewInput}>
                             <Text style={styles.labels}>Email:</Text>
-                            <TextInput style={styles.inputs} placeholder="Insira seu email aqui" keyboardType="email-address" onChangeText={(inputValue) => setEmail(inputValue)}/>
+                            <TextInput style={styles.inputs} placeholder="Insira seu email aqui" keyboardType="email-address" onChangeText={(inputValue) => setEmail(inputValue)} value={email}/>
                         </View>
                         <View style={styles.viewInput}>
                             <Text style={styles.labels}>Senha:</Text>
-                            <TextInput style={styles.inputs} placeholder="Insira sua senha aqui" secureTextEntry={true} onChangeText={(inputValue) => setSenha(inputValue)}/>
+                            <TextInput style={styles.inputs} placeholder="Insira sua senha aqui" secureTextEntry={true} onChangeText={(inputValue) => setSenha(inputValue)} value={senha}/>
                         </View>
                         <View style={styles.viewInput}>
                             <Text style={styles.labels}>Confirme sua senha:</Text>
-                            <TextInput style={styles.inputs} placeholder="Confirme sua senha aqui" secureTextEntry={true} onChangeText={(inputValue) => setSenhaConfirmada(inputValue)}/>
+                            <TextInput style={styles.inputs} placeholder="Confirme sua senha aqui" secureTextEntry={true} onChangeText={(inputValue) => setSenhaConfirmada(inputValue)} value={senhaConfirmada}/>
                         </View>
                         <TouchableOpacity style={styles.botaoConfirmar}><Text style={styles.botaoConfirmarTexto}onPress={ async() => {
+                            setSenhaConfirmada('');
+                            setSenha('');
+                            setNome('');
+                            setEmail('');
                             if(validacaoCadastro(nome, email, senha, senhaConfirmada)){
 
                                 const novoUsuario = {
@@ -62,7 +67,7 @@ export default function Cadastro(){
                                     senha:senha.trim()
                                 }
                                 handleSubmit(novoUsuario)
-
+                                navigation.navigate('Login')
                             }else{
                                 showAlert();
                             }

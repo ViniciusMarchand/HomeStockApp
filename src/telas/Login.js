@@ -1,6 +1,21 @@
+import { useState } from "react";
 import { TextInput, TouchableOpacity, View, Text, StyleSheet } from "react-native";
+import logar from "../services/apis/usuario/logar"
+export default function Login({navigation}) {
 
-export default function Login({navigation}){
+    const [email, setEmail] = useState('');
+    const [senha, setSenha] = useState('');
+
+    function submit() {
+        const usuario = {
+            email:email,
+            senha:senha
+        }
+        
+        logar(usuario).then(res => {
+            console.log(res.data.accessToken)
+        })  
+    }
 
     return(
         <>
@@ -10,19 +25,20 @@ export default function Login({navigation}){
                     <Text style={styles.paginaTitulo}>Entrar</Text>
                     <View style={styles.viewInput}>
                         <Text style={styles.labels}>Email:</Text>
-                        <TextInput style={styles.inputs} placeholder="Insira seu email aqui" keyboardType="email-address"/>
+                        <TextInput style={styles.inputs} placeholder="Insira seu email aqui" keyboardType="email-address" onChangeText={(inputValue) => setEmail(inputValue)} value={email}/>
                     </View>
                     <View style={styles.viewInput}>
                         <Text style={styles.labels}>Senha:</Text>
-                        <TextInput style={styles.inputs} placeholder="Insira sua senha aqui" secureTextEntry={true}/>
+                        <TextInput style={styles.inputs} placeholder="Insira sua senha aqui" secureTextEntry={true} onChangeText={(inputValue) => setSenha(inputValue)} value={senha}/>
                     </View>
                     <TouchableOpacity onPress={() => navigation.navigate('Cadastro')} style={styles.botaoCadastro}><Text>Ainda não tem uma conta? Clique aqui</Text></TouchableOpacity>
-                    <TouchableOpacity style={styles.botaoConfirmar}><Text style={styles.botaoConfirmarTexto}>CONFIRMAR</Text></TouchableOpacity>
+                    <TouchableOpacity onPress={() => submit()} style={styles.botaoConfirmar}><Text style={styles.botaoConfirmarTexto}>CONFIRMAR</Text></TouchableOpacity>
                 </View>
             </View>
         </>
     );
 }
+
 const styles = StyleSheet.create({
     centralizar:{
         width:'100%',
