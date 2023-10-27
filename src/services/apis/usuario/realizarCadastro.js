@@ -1,5 +1,6 @@
 import axios from  'axios';
+import { http } from '../../http';
 async function realizarCadastro(usuario){
-    const response = await axios.post('http://localhost:3000/usuarios', usuario)
+    const response = await axios.post(`${http}usuarios`, usuario)
 }
 export default realizarCadastro

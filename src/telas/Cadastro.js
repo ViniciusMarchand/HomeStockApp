@@ -26,7 +26,7 @@ export default function Cadastro({navigation}){
 
       const handleSubmit = async (usuario)=> { 
         try {
-            const response = await axios.post(`${http}/usuarios`, usuario)
+            const response = await axios.post(`${http}usuarios`, usuario)
             console.log(response.data)
         } catch (error) {
             console.error(error.message + 'dadw');

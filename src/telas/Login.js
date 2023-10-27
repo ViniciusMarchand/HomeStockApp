@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TextInput, TouchableOpacity, View, Text, StyleSheet } from "react-native";
 import logar from "../services/apis/usuario/logar"
-export default function Login({navigation}) {
+import { useRoute } from "@react-navigation/native";
+import AsyncStorage from '@react-native-async-storage/async-storage';export default function Login({navigation}) {
 
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
+
+    const route = useRoute();
+    const {setEstaLogado} = route.params;
 
     function submit() {
         const usuario = {
@@ -13,8 +17,22 @@ export default function Login({navigation}) {
         }
         
         logar(usuario).then(res => {
-            console.log(res.data.accessToken)
-        })  
+            armazenarToken(res.data.accessToken)
+            setEstaLogado(true);
+        }).catch(erro =>{
+            setEmail('');
+            setSenha('');
+            console.error('Email ou senha inválidos')
+        });
+
+    }
+
+    const armazenarToken = async (valor) => {
+        try {
+            await AsyncStorage.setItem('token', JSON.stringify(valor));
+        } catch (error) {
+            console.error('Erro ao armazenar token')
+        }
     }
 
     return(
