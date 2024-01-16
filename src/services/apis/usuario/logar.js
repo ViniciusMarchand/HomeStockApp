@@ -4,5 +4,7 @@ import { useState } from "react";
 export default async function logar(usuario) {
     return await axios.post(`${http}login`, usuario)
     .then((res) => res)
-    .catch(erro => erro.message);
+    .catch(erro => {
+        console.error(erro.message)
+    });
 }

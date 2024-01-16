@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import HomeScreen from './src/telas/Home';
-import StatutScreen from './src/telas/status'
+import HomeScreen from './src/telas/Produtos';
+import StatutScreen from './src/telas/Status'
 import CustomSidebarMenu from './src/telas/CustomSidebarMenu';
 import Login from './src/telas/Login';
 import Cadastro from './src/telas/Cadastro';
@@ -16,7 +16,7 @@ const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
 
 const App = () => {
-    const [estaLogado, setEstaLogado] = useState(false);
+    const [estaLogado, setEstaLogado] = useState(true);
 
     if(!estaLogado){
         return(
@@ -42,7 +42,7 @@ const App = () => {
                 <Drawer.Navigator
                     drawerContent={(props) => <CustomSidebarMenu {...props} />}
                 >
-                    <Drawer.Screen name='Home' component={HomeScreen} />
+                    <Drawer.Screen name='Produtos' component={HomeScreen} />
                     <Drawer.Screen name='Status' component={StatutScreen} />
                 </Drawer.Navigator>
             </NavigationContainer>
